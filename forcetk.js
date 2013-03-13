@@ -59,7 +59,7 @@ if (forcetk.Client === undefined) {
         this.clientId = clientId;
         this.loginUrl = loginUrl || 'https://login.salesforce.com/';
         if (typeof proxyUrl === 'undefined' || proxyUrl === null) {
-            if (location.protocol === 'file:') {
+            if (location.protocol.indexOf("http") == -1) {
                 // In Cordova
                 this.proxyUrl = null;
             } else {
