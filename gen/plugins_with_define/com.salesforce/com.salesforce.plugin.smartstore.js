@@ -150,6 +150,11 @@ var buildSmartQuerySpec = function (smartSql, pageSize) {
 };
 
 // ====== Soup manipulation ======
+var getDatabaseSize = function(successCB, errorCB) {
+    console.log("SmartStore.getDatabaseSize");
+    exec(SALESFORCE_MOBILE_SDK_VERSION, successCB, errorCB, SERVICE, "pgGetDatabaseSize", []);
+};
+
 var registerSoup = function (soupName, indexSpecs, successCB, errorCB) {
     console.log("SmartStore.registerSoup: '" + soupName + "' indexSpecs: " + JSON.stringify(indexSpecs));
     exec(SALESFORCE_MOBILE_SDK_VERSION, successCB, errorCB, SERVICE,
@@ -277,6 +282,7 @@ module.exports = {
     buildRangeQuerySpec: buildRangeQuerySpec,
     buildLikeQuerySpec: buildLikeQuerySpec,
     buildSmartQuerySpec: buildSmartQuerySpec,
+    getDatabaseSize: getDatabaseSize,
     registerSoup: registerSoup,
     removeSoup: removeSoup,
     showInspector: showInspector,

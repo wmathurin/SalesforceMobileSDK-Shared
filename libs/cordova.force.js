@@ -741,3 +741,26 @@ var SoupIndexSpec = navigator.smartstore.SoupIndexSpec;
 var QuerySpec = navigator.smartstore.QuerySpec;
 var StoreCursor = navigator.smartstore.StoreCursor;
 
+cordova.define("com.salesforce.plugin.ibeaconmanager", function(require, exports, module) {
+    var SERVICE = "com.salesforce.ibeaconmanager";
+
+    var exec = require("com.salesforce.util.exec").exec;
+
+    var startRanging = function(successCB, errorCB) {
+        exec(SALESFORCE_MOBILE_SDK_VERSION, successCB, errorCB, SERVICE, "startRanging", []);
+    };
+
+    var stopRanging = function(successCB, errorCB) {
+        exec(SALESFORCE_MOBILE_SDK_VERSION, successCB, errorCB, SERVICE, "stopRanging", []);
+    };
+
+
+    /**
+     * Part of the module that is public
+     */
+    module.exports = {
+        startRanging: startRanging,
+        stopRanging: stopRanging
+    };
+});
+
