@@ -9,7 +9,7 @@
         "ratchet": "1.0.2",
         "ratchet2": "twbs/ratchet#v2.0.2",
         "fastclick": "0.6.2",
-        "react":"v0.12.0"
+        "react":"v0.12.2"
     },
     "exportsOverride": {
         "jquery": {
