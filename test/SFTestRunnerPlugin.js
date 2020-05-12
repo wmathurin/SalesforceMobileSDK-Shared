@@ -46,12 +46,9 @@ cordova.define("com.salesforce.plugin.testrunner", function(require, exports, mo
 
     var onReadyForTests = function (successCB, errorCB) {
         console.log("TestRunner.onReadyForTests");
-        exec(SALESFORCE_MOBILE_SDK_VERSION,
-             successCB, errorCB, 
-             SERVICE,
-             "onReadyForTests",
-             []
-            );                  
+        console.log("nimbus--->" + JSON.stringify(_nimbus));
+        console.log("nimbus.plugins--->" + _nimbus.plugins);
+        _nimbus.plugins.TestRunnerPlugin.onReadyForTests();
     };
 
     var startTest =  function(testName) {
@@ -61,17 +58,7 @@ cordova.define("com.salesforce.plugin.testrunner", function(require, exports, mo
 
     var onTestComplete = function (testName, success, message, status, successCB, errorCB) {
         console.log("TestRunner.onTestComplete: " + testName + ",success:" + success);
-        exec(SALESFORCE_MOBILE_SDK_VERSION,
-             successCB, errorCB, 
-             SERVICE,
-             "onTestComplete",
-             [{
-                 "testName": testName, 
-                 "success": success, 
-                 "message": message, 
-                 "testDuration": status.testDuration
-             }]
-            );
+        _nimbus.plugins.TestRunnerPlugin.onTestComplete(testName, success, message, status.testDuration);
     };
 
     module.exports = {
