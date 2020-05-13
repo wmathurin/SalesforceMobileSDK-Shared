@@ -24,13 +24,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-// Version this js was shipped with
-var SALESFORCE_MOBILE_SDK_VERSION = "8.2.0";
-
-cordova.define("com.salesforce.plugin.testrunner", function(require, exports, module) {
-    var SERVICE = "com.salesforce.testrunner";
-    var exec = require("com.salesforce.util.exec").exec;
-
+navigator.testrunner = (function(nimbus) {
     // Private
     var _testSuiteClassName = null;
     var _testSuite = null;
@@ -45,10 +39,7 @@ cordova.define("com.salesforce.plugin.testrunner", function(require, exports, mo
     };
 
     var onReadyForTests = function (successCB, errorCB) {
-        console.log("TestRunner.onReadyForTests");
-        console.log("nimbus--->" + JSON.stringify(_nimbus));
-        console.log("nimbus.plugins--->" + _nimbus.plugins);
-        _nimbus.plugins.TestRunnerPlugin.onReadyForTests();
+        nimbus.plugins.TestRunnerPlugin.onReadyForTests();
     };
 
     var startTest =  function(testName) {
@@ -58,16 +49,13 @@ cordova.define("com.salesforce.plugin.testrunner", function(require, exports, mo
 
     var onTestComplete = function (testName, success, message, status, successCB, errorCB) {
         console.log("TestRunner.onTestComplete: " + testName + ",success:" + success);
-        _nimbus.plugins.TestRunnerPlugin.onTestComplete(testName, success, message, status.testDuration);
+        nimbus.plugins.TestRunnerPlugin.onTestComplete(testName, success, message, status.testDuration);
     };
 
-    module.exports = {
+    return {
         setTestSuite: setTestSuite,
         onReadyForTests: onReadyForTests,
         startTest: startTest,
         onTestComplete: onTestComplete
     };
-});
-
-// For backward compatibility
-navigator.testrunner = cordova.require("com.salesforce.plugin.testrunner");
+})(window.__nimbus);

@@ -29,13 +29,13 @@
 
 	<!-- we load all the test suite definitions here but do not run them until the native test runner tells us to -->
 	<script src="test/SFTestSuite.js"></script>
-    <script src="test/SFAbstractSmartStoreTestSuite.js"></script>
-    <script src="test/SFSmartStoreTestSuite.js"></script>
-    <script src="test/SFSmartStoreLoadTestSuite.js"></script>
-    <script src="test/SFSDKInfoTestSuite.js"></script>
-    <script src="test/SFMobileSyncTestSuite.js"></script>
-    <script src="test/SFForceJSTestSuite.js"></script>
-    <script type="text/javascript" charset="utf-8">
+  <script src="test/SFAbstractSmartStoreTestSuite.js"></script>
+  <script src="test/SFSmartStoreTestSuite.js"></script>
+  <script src="test/SFSmartStoreLoadTestSuite.js"></script>
+  <script src="test/SFSDKInfoTestSuite.js"></script>
+  <script src="test/SFMobileSyncTestSuite.js"></script>
+  <script src="test/SFForceJSTestSuite.js"></script>
+  <script type="text/javascript" charset="utf-8">
 
     var debugMode = true;
     var logToConsole = cordova.require("com.salesforce.util.logger").logToConsole;
@@ -45,7 +45,7 @@
             logToConsole('OAuth success!');
             Force.init();
             // Now we are ready
-            cordova.require("com.salesforce.plugin.testrunner").onReadyForTests();
+            navigator.testrunner.onReadyForTests();
         },
         function(error) {
             logToConsole('OAuth error! ' + error);
