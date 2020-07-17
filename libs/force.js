@@ -42,7 +42,7 @@ var force = (function () {
 
     // The force.com API version to use.
     // To override default, pass apiVersion in init(props)
-        apiVersion = 'v46.0',
+        apiVersion = 'v49.0',
 
     // Keep track of OAuth data (access_token, refresh_token, instance_url and user_id)
         oauth,
@@ -141,16 +141,22 @@ var force = (function () {
     }
 
     function parseUrl(url) {
-        var match = url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)([^?#]*)(\?[^#]*|)(#.*|)$/);
-        return match && {
-            protocol: match[1],
-            host: match[2],
-            hostname: match[3],
-            port: match[4],
-            path: match[5],
-            params: parseQueryString(match[6]),
-            hash: match[7]
-        };
+        try {
+            var relativePath = url.indexOf("/") == 0;
+            var url = new URL(relativePath ? "https://x" + url : url);
+            return url && {
+                protocol: relativePath ? "" : url.protocol,
+                host: relativePath ? "" : url.host,
+                hostname: relativePath ? "" : url.hostname,
+                port: url.port == "" ? undefined : url.port,   // to work like the old implementation
+                path: url.pathname == "/" ? "" : url.pathname, // to work like the old implementation
+                params: parseQueryString(url.search),
+                hash: url.hash
+            };
+        }
+        catch (error) {
+            return null;
+        }
     }
 
     function refreshTokenWithPlugin(success, error) {
@@ -669,6 +675,24 @@ var force = (function () {
         );
     }
 
+    /**
+     * Convenience function to execute a SOQL queryAll
+     * Unlike query, it also returns records that have been deleted because of a merge or delete
+     * @param soql
+     * @param successHandler
+     * @param errorHandler
+     */
+    function queryAll(soql, successHandler, errorHandler) {
+        return request(
+            {
+                path: '/services/data/' + apiVersion + '/queryAll',
+                params: {q: soql}
+            },
+            successHandler,
+            errorHandler
+        );
+    }
+
     /*
      * Queries the next set of records based on pagination.
      * This should be used if performing a query that retrieves more than can be returned
@@ -685,7 +709,7 @@ var force = (function () {
         return request(
             {
                 path: obj.path,
-                params: obj.parans
+                params: obj.params
             },
             successHandler,
             errorHandler
@@ -947,6 +971,7 @@ var force = (function () {
         describe: describe,
         describeLayout: describeLayout,
         query: query,
+        queryAll: queryAll,
         queryMore: queryMore,
         search: search,
         create: create,
