@@ -97,3 +97,4 @@ This script has no `-d` (isDev) flag — version bumps here are unconditional. I
 | [SalesforceMobileSDK-CordovaPlugin](https://github.com/forcedotcom/SalesforceMobileSDK-CordovaPlugin) | Distribution package for the Cordova plugin; copies generated files from this repo |
 | [SalesforceMobileSDK-Android](https://github.com/forcedotcom/SalesforceMobileSDK-Android) | Native Android SDK; hosts this repo as a submodule for hybrid apps |
 | [SalesforceMobileSDK-iOS-Hybrid](https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid) | Native iOS hybrid bridge; hosts this repo as a submodule for hybrid apps |
+# dev141 sync test 1794006336
